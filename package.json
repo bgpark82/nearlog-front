@@ -4,7 +4,7 @@
   "description": "nearlog front page",
   "main": "index.js",
   "scripts": {
-    "dev": "next"
+    "start": "next"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/bgpark82/nearlog-front#readme",
   "dependencies": {
-    "next": "^9.5.3"
+    "next": "^9.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
