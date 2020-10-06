@@ -1,9 +1,23 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './Marker';
+import API from '../lib/api/api'
+
+
 
 const Map = () => {
 
+    const fetchPoi = async () => {
+        const response = await API.get("/api/v1/public/itinerary/925")
+        console.log(response);
+        setSchedules(response.data.data.schedules);
+    }
+
+    useEffect( () => {
+        fetchPoi();
+    }, [])
+
+    const [schedules, setSchedules] = useState([]);
     const [center, setCenter] = useState({lat: 59.95, lng: 30.33});
     const [zoom, setZoom] = useState(11);
 
@@ -15,11 +29,15 @@ const Map = () => {
             defaultCenter={center}
             defaultZoom={zoom}
         >
-            <Marker
-                lat={59.955413}
-                lng={30.337844}
-                text="My Marker"
-            ></Marker>
+            {schedules.map(schedule => (
+                <Marker
+                    key={schedule.id}
+                    lat={schedule.place.location.lat}
+                    lng={schedule.place.location.lon}
+                    text={schedule.day}
+                 ></Marker>
+            ))}
+            
             
         </GoogleMapReact>
         </div>

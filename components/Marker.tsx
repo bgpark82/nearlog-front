@@ -1,10 +1,24 @@
 import React from 'react'
+import styled from '@emotion/styled';
 
-const Marker = ({lat, lng, text}) => {
+const MarkerIcon = styled.div`
+    width:2rem;
+    height:2rem;
+    background:black;
+    color:white;
+    border-radius: 100%;
+    display: flex;
+    justify-content:center;
+    align-content:center;
+    font-weight: 700;
+`;
+
+
+const Marker = ({key, lat, lng, text}) => {
     return (
-        <div className="marker">
+        <MarkerIcon className="marker">
             {text}
-        </div>
+        </MarkerIcon>
     )
 }
 
