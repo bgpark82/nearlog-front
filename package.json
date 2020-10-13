@@ -4,6 +4,7 @@
   "description": "nearlog front page",
   "main": "index.js",
   "scripts": {
+    "build": "next build",
     "start": "next -p 3030"
   },
   "repository": {

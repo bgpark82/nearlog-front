@@ -6,6 +6,13 @@ import Axios from 'axios';
 
 const Map = () => {
 
+    
+    const [schedules, setSchedules] = useState([]);
+    const [center, setCenter] = useState({lat: 37.5789464, lng: 126.97177});
+    const [zoom, setZoom] = useState(11);
+    const [steps, setSteps] = useState([])
+
+
     const handleApiLoaded = (map, maps) => {
 
         const path = schedules.map(schedule => ({
@@ -36,30 +43,31 @@ const Map = () => {
     const fetchPoi = async () => {
         const response = await API.get("/api/v1/public/itinerary/925")
         setSchedules(response.data.data.schedules);
-        // fetchRoute(response.data.data.schedules);
+        fetchRoute(response.data.data.schedules);
     }
 
     const fetchRoute = async (schedules) => {
+
         const path = getPath(schedules);
         console.log(path);
         for(let i = 0; i < path.length; i++) {
             const start = path[i];
             const end = path[i+1];
-            const url = `http://osrm-api.gagopar.com/route/${start.lng},${start.lat};${end.lng},${end.lat}?alternatives=false&continue_straight=true&steps=true`
-            console.log(url);
-            const route = await Axios.get(url);
-            console.log(route);
+            if(start && end) {
+                const result = await Axios.post('http://localhost:3065/',{start, end})
+                setSteps([...steps, result.data])
+            }
         }
-
     }
 
     useEffect( () => {
         fetchPoi();
     }, [])
 
-    const [schedules, setSchedules] = useState([]);
-    const [center, setCenter] = useState({lat: 37.5789464, lng: 126.97177});
-    const [zoom, setZoom] = useState(11);
+    useEffect(() => {
+        console.log(steps);
+    },[steps])
+
 
     return (
         <div  style={{ height: '100vh', width: '100%' }}>
