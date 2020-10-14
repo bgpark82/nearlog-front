@@ -25,7 +25,7 @@ const MarkerIcon = styled.div`
 `;
 
 
-const Marker = ({lat, lng, text}) => {
+const Marker = ({ lat, lng, text}) => {
     return (
         <MarkerIcon>
             <span>

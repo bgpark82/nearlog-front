@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './Marker';
 
-const Map = ({isMarkerShown, zoom, center, handleApiLoaded}) => {
-
+const Map = ({isMarkerShown, zoom, center, handleApiLoaded, steps}) => {
+    console.log(steps);
     return (
         <div  style={{ height: '100vh', width: '100%' }}>
        
@@ -14,11 +14,15 @@ const Map = ({isMarkerShown, zoom, center, handleApiLoaded}) => {
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         >
-            <Marker
-                lat={37.568528265476075}
-                lng={127.01156616210939}
-                text="1"
-            ></Marker>
+            {/* {steps.map((step, index) => 
+                <Marker
+                    key={index}
+                    lat={step.lat}
+                    lng={step.lng}
+                    text="1"
+                ></Marker>
+            )} */}
+
         
         </GoogleMapReact>
         </div>
