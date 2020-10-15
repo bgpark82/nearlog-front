@@ -2,8 +2,15 @@ import React, {useState, useEffect} from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './Marker';
 
-const Map = ({isMarkerShown, zoom, center, handleApiLoaded, steps}) => {
-    console.log(steps);
+const Map = ({isMarkerShown, zoom, center, handleApiLoaded, itinerary}) => {
+
+    const [isLoaded, setIsLoaded] = useState(false)
+    useEffect(() => {
+        if(itinerary != {}) {
+            setIsLoaded(true)
+        }
+    },[itinerary])
+
     return (
         <div  style={{ height: '100vh', width: '100%' }}>
        
@@ -14,14 +21,14 @@ const Map = ({isMarkerShown, zoom, center, handleApiLoaded, steps}) => {
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
         >
-            {/* {steps.map((step, index) => 
+            {isLoaded &&  itinerary.schedules.map((schedule, index) => 
                 <Marker
-                    key={index}
-                    lat={step.lat}
-                    lng={step.lng}
-                    text="1"
+                    key={schedule.id}
+                    lat={schedule.place.location.lat}
+                    lng={schedule.place.location.lon}
+                    text={schedule.day}
                 ></Marker>
-            )} */}
+            )}
 
         
         </GoogleMapReact>

@@ -7,21 +7,14 @@ const index = () => {
 
     const [center, setCenter] = useState({lat: 37.5789464, lng: 126.97177});
     const [zoom, setZoom] = useState(11);
-    const [steps, setSteps] = useState([])
+    const [itinerary, setItinerary] = useState({})
 
-    const fetchSteps = async () => {
-        const response = await API.get('http://localhost:3065')
-        return response.data.map(step => ({
-            lng: step.maneuver.location[0],
-            lat: step.maneuver.location[1]
-        }))
+    const fetchSchedules = async () => {
+        return await API.get('http://localhost:3065/api/v1/routes')
     }
 
-    const handleApiLoaded = async(map, maps) => {
-        const path = await fetchSteps();
-        setSteps(path)
-
-        new maps.Polyline({
+    const getPolyline = (path, maps) => {
+        return new maps.Polyline({
             path,
             geodesic: true,
             strokeColor: "#343a40",
@@ -38,12 +31,27 @@ const index = () => {
                     repeat: "10px"
                 }
             ],
-            map
         })
+    }
+
+    const handleApiLoaded = async(map, maps) => {
+        const response = await fetchSchedules();
+        setItinerary(response.data);
+
+        let path = []
+        response.data.schedules.forEach(schedule => {
+            if(schedule.path) {
+                path = [...path, ...schedule.path]
+            } else {
+                const polyline = getPolyline(path,maps)
+                polyline.setMap(map);
+                path = [];
+            }
+        })  
     };
 
     useEffect(() => {
-        fetchSteps();
+        fetchSchedules();
         
     }, [])
 
@@ -54,7 +62,7 @@ const index = () => {
                 center={center}
                 zoom={zoom}
                 handleApiLoaded={handleApiLoaded}
-                steps={steps}
+                itinerary={itinerary}
             />
         </div>
     )
