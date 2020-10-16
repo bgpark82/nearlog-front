@@ -1,5 +1,7 @@
 import React,{useCallback, useEffect, useState} from 'react'
 import Map from '../components/Map'
+import MapLayout from '../components/MapLayout';
+import Sidebar from '../components/Sidebar';
 import API from '../lib/api/api';
 
 
@@ -7,8 +9,11 @@ const index = () => {
 
     const [center, setCenter] = useState({lat: 37.5789464, lng: 126.97177});
     const [zoom, setZoom] = useState(11);
-    const [itinerary, setItinerary] = useState({})
+    const [itinerary, setItinerary] = useState({
+        schedules:[]
+    })
     const [activeDate, setActiveDate] = useState(-1)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const fetchSchedules = async () => {
         return await API.get('http://localhost:3065/api/v1/routes')
@@ -49,33 +54,40 @@ const index = () => {
         })  
     }
 
-    const isActiveDate = (date) => {
-        return activeDate == date
-    }
 
-    const getSchedules = async () => {
-        const response = await fetchSchedules();
-        setItinerary(response.data);
-    }
 
-    const onClickMarker = (schedule) => {
+    const onClickMarker = useCallback((schedule) => {
         setActiveDate(schedule.day);
-        renderPolyline(itinerary, map, maps)
-    }
+    },[])
 
     const handleApiLoaded = useCallback(async(map, maps) => {
         renderPolyline(itinerary, map, maps)
     },[itinerary, activeDate]);
+
+    const getSchedules = useCallback(async () => {
+        const response = await fetchSchedules();
+        setItinerary(response.data);
+    },[])
 
     useEffect(() => {
         getSchedules()
     },[])
 
 
+    
+    useEffect(() => {
+        if(itinerary  && itinerary.schedules) {
+            setIsLoaded(true)
+        }
+    },[itinerary, isLoaded])
+
+
 
     return (
-        <div>
+        <MapLayout>
+            <Sidebar isLoaded={isLoaded} itinerary={itinerary}></Sidebar>
             <Map 
+                isLoaded
                 center={center}
                 zoom={zoom}
                 handleApiLoaded={handleApiLoaded}
@@ -83,7 +95,7 @@ const index = () => {
                 onClickMarker={onClickMarker}
                 activeDate={activeDate}
             />
-        </div>
+        </MapLayout>
     )
 }
 

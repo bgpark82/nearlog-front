@@ -5,12 +5,10 @@ const CardWrapper = styled.div`
     width:10rem;
     height: 10rem;
     background:white;
-
-    position: absolute;
-    top:0;
-    left:0;
-
-    z-index:100;
+    
+    display:flex;
+    padding: 2rem;
+    margin: 0;
 
     image{
         width: 5rem;

@@ -19,10 +19,22 @@ const MarkerIcon = styled.div`
     };
     color: white;
     border-radius: 100%;
-    font-size:0.9rem;
+    font-size:1rem;
     text-align: center;
     cursor:pointer;
+
+    // active icon
+    /* border: 3px solid #862e9c;
+    background: white;
+    color: #862e9c;
+    font-weight: 500; */
+
+    // active day icon
+    /* background: #862e9c;
+    color: white;
+    font-weight: 100; */
 `;
+
 
 
 const Marker = ({ lat, lng, text, onClickMarker, schedule, activeDate}) => {
