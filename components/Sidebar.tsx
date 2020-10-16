@@ -11,8 +11,11 @@ const SidebarWrapper = styled.section`
 
     z-index: 10;
     width: 27rem;
-    height: 100vh;
+    height: 100%;
+    padding: 0 1.5rem 0 0;
     background: white;
+
+    overflow:scroll;
 
     /* offset-x | offset-y | blur-radius | spread-radius | color */
     box-shadow: -2px -2px 42px -20px rgba(0, 0, 0, 1);
