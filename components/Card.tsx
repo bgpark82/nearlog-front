@@ -1,6 +1,11 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { category } from '../utils/category'
+import Category from './Category'
+import { IoIosStar } from "react-icons/io";
+import Star from './Star';
+
+
 
 const CardWrapper = styled.div`
 
@@ -44,28 +49,24 @@ const Dates = styled.div`
 
 const Categories = styled.div`
     display: inline-flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     div + div {
         margin-left: 0.1rem;
     }
 `
 
-const Category = styled.div`
-    color: #333;
-    font-size: 0.7rem;
-    font-weight: 600;
+const Rating = styled.div`
+    display: flex;
+    align-content: center;
+    div + div {
+        margin-left: 0.21rem;
 
-    border-radius: 4rem;
-    border: 1px solid #adb5bd;
-
-    padding: 0.4rem 0.6rem;
-    width:fit-content;
+    }
 `
 
+
+
 const Card = ({thumbnail_url, name, date, day, seq, categories, rating}) => {
-
-    
-
 
     return (
         <CardWrapper>
@@ -77,10 +78,17 @@ const Card = ({thumbnail_url, name, date, day, seq, categories, rating}) => {
                         <div>{day}일차</div>
                     </Dates>
                     <Name>{name}</Name>
+                    
                 </section>
                 <Categories>
+                    <Rating>
+                        <Star/>
+                        <div>
+                        {Math.floor(rating * 100000) / 100}
+                        </div>
+                    </Rating>
                     {categories && categories.map(c=>
-                        <Category key={c}>{category[c]}</Category>
+                        <Category key={c} category={category[c]}/>
                     )}
                 </Categories>
             </Content>

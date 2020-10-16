@@ -23,6 +23,7 @@ const Sidebar = ({isLoaded, itinerary}) => {
         <SidebarWrapper>
             {isLoaded && itinerary.schedules.map((schedule) => 
                 <Card
+                    key={schedule.id}
                     date={schedule.date}
                     day={schedule.day}
                     seq={schedule.seq}
