@@ -1,4 +1,5 @@
 import '../css/reset.css'
+import '../css/global.css'
 
 import Head from 'next/head'
 import React from 'react'

@@ -10,7 +10,7 @@ const SidebarWrapper = styled.section`
     right:0;
 
     z-index: 10;
-    width: 30rem;
+    width: 27rem;
     height: 100vh;
     background: white;
 
@@ -23,6 +23,11 @@ const Sidebar = ({isLoaded, itinerary}) => {
         <SidebarWrapper>
             {isLoaded && itinerary.schedules.map((schedule) => 
                 <Card
+                    date={schedule.date}
+                    day={schedule.day}
+                    seq={schedule.seq}
+                    categories={schedule.place.categories}
+                    rating={schedule.place.rating}
                     thumbnail_url={schedule.place.thumbnail_url}
                     name={schedule.place.name}
                 ></Card>
