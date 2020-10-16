@@ -54,8 +54,6 @@ const index = () => {
         })  
     }
 
-
-
     const onClickMarker = useCallback((schedule) => {
         setActiveDate(schedule.day);
     },[])
@@ -72,8 +70,6 @@ const index = () => {
     useEffect(() => {
         getSchedules()
     },[])
-
-
     
     useEffect(() => {
         if(itinerary  && itinerary.schedules) {

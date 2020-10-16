@@ -11,7 +11,7 @@ const CardWrapper = styled.div`
 
     background:white;
     display:flex;
-    padding: 1rem;
+    padding: 1rem 1rem;
     width: 100%;
     border-bottom: 1px solid #eee;
 
@@ -22,7 +22,6 @@ const CardWrapper = styled.div`
         min-width: 12rem;
         height: 12rem;
         object-fit:cover;
-
     }
 `
 
@@ -45,11 +44,16 @@ const Dates = styled.div`
     display: flex;
     justify-content:space-between;
     margin-bottom: 1rem;
+    color: #999;
+    font-size: 0.9rem;
+    font-weight:100;
 `
 
 const Categories = styled.div`
-    display: inline-flex;
-    justify-content: space-between;
+    display: flex;
+    justify-content: flex-end;
+
+
     div + div {
         margin-left: 0.1rem;
     }
@@ -58,6 +62,8 @@ const Categories = styled.div`
 const Rating = styled.div`
     display: flex;
     align-content: center;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
     div + div {
         margin-left: 0.21rem;
 
@@ -78,19 +84,20 @@ const Card = ({thumbnail_url, name, date, day, seq, categories, rating}) => {
                         <div>{day}일차</div>
                     </Dates>
                     <Name>{name}</Name>
-                    
                 </section>
-                <Categories>
+                <section>
                     <Rating>
                         <Star/>
-                        <div>
-                        {Math.floor(rating * 100000) / 100}
-                        </div>
+                        <div>{Math.floor(rating * 1000) / 100}</div>
                     </Rating>
+                    <Categories>
                     {categories && categories.map(c=>
                         <Category key={c} category={category[c]}/>
                     )}
-                </Categories>
+                    </Categories>
+
+                </section>
+                
             </Content>
         </CardWrapper>
     )

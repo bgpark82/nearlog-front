@@ -11,10 +11,11 @@ const SidebarWrapper = styled.section`
 
     z-index: 10;
     width: 27rem;
-    height: 100%;
     padding: 0 1.5rem 0 0;
     background: white;
 
+    // scroller
+    height: 100%;
     overflow:scroll;
 
     /* offset-x | offset-y | blur-radius | spread-radius | color */
